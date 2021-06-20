@@ -46,4 +46,4 @@ class Command(BaseCommand):
             store = Store.objects.create(name=f"Store{i + 1}")
             store.books.set(temp_books)
             store.save()
-        self.stdout.write(self.style.SUCCESS('ADD CONNECTIONS'))
+        self.stdout.write(self.style.SUCCESS('OK'))
