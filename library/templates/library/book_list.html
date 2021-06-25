@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Book List</h1>
+
+    {% if book_list %}
+        <!-- здесь наш код "бежит" по списку книг -->
+        <ul>
+
+            {% for book in book_list %}
+                <!-- здесь код, который использует информацию из каждого элемента book списка-->
+                <li>
+                    <h3><a href="">{{ book }}</a> </h3><strong>Pages:</strong> {{ book.pages }}, <strong>Price:</strong> {{ book.price }}, <strong>Rating</strong>: {{ book.rating }},
+                    <strong>Author:</strong> {{ book.authors }}, <strong>Publisher:</strong> {{ book.publisher }}, <strong>Pubdate:</strong> {{ book.pubdate }},
+                </li>
+            {% endfor %}
+
+        </ul>
+    {% else %}
+        <p>There are no books in the library.</p>
+    {% endif %}
+{% endblock %}
+

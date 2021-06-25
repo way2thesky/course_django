@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+
+    <h1>Store List</h1>
+
+    {% if store_list %}
+        <ul>
+
+            {% for store in store_list %}
+                <li>
+                    <h3><a href="">{{ store }}</a> </h3>
+                </li>
+            {% endfor %}
+
+        </ul>
+    {% else %}
+        <p>There are no authors available.</p>
+    {% endif %}
+{% endblock %}
