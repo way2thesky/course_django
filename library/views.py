@@ -1,29 +1,18 @@
-from django.shortcuts import redirect
+from django.db.models import Avg, Max, Min
 from django.views.generic import DetailView, ListView
-
 from .models import Author, Book, Publisher, Store
+from django.shortcuts import render
+from django.views import generic
 
 
-class BookListView(ListView):
-    model = Book
-    paginate_by = 1000
-    template_name = 'library/book_list.html'
-    queryset = Book.objects.all().prefetch_related('authors__book_set').all()
-    ordering = ['name']
-
-
-class BookDetailView(DetailView):
-    model = Book
-    paginate_by = 10
-    template_name = 'library/author_detail.html'
-    ordering = ['name']
+def index(request):
+    """ Функция отображения для домашней страницы сайта"""
+    return render(request, 'index.html')
 
 
 class AuthorListView(ListView):
     model = Author
-    paginate_by = 10
     template_name = 'library/author_list.html'
-    ordering = ['name']
 
 
 class AuthorDetailView(DetailView):
@@ -31,11 +20,22 @@ class AuthorDetailView(DetailView):
     template_name = 'library/author_detail.html'
 
 
+class BookListView(generic.ListView):
+    model = Book
+    template_name = 'library/book_list.html'
+
+
+class BookDetailView(generic.DetailView):
+    model = Book
+    template_name = 'library/book_detail.html'
+
+    # queryset = Book.objects.all().select_related('publisher').prefetch_related('stores')
+    # average_price = Book.objects.aggregate(average_price=Avg('price'))
+
+
 class PublisherListView(ListView):
     model = Publisher
-    paginate_by = 10
     template_name = 'library/publisher_list.html'
-    ordering = ['name']
 
 
 class PublisherDetailView(DetailView):
@@ -45,9 +45,7 @@ class PublisherDetailView(DetailView):
 
 class StoreListView(ListView):
     model = Store
-    paginate_by = 10
     template_name = 'library/store_list.html'
-    ordering = ['name']
 
 
 class StoreDetailView(DetailView):

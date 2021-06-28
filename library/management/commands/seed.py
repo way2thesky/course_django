@@ -17,6 +17,11 @@ class Command(BaseCommand):
         parser.add_argument('arg', type=int)
 
     def handle(self, *args, **options):
+        Author.objects.all().delete()
+        Publisher.objects.all().delete()
+        Book.objects.all().delete()
+        Store.objects.all().delete()
+
         num = options['arg']
         # create  authors
         authors = [Author(name=fake.name(), age=random.randint(20, 70)) for _ in range(int(num))]

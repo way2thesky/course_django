@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+    <h1>Library Home</h1>
+    <ul class="sidebar-nav">
+        <li><a href="{% url 'library:index' %}">Home</a></li>
+        <li><a href="{% url 'library:book-list' %}">All books</a></li>
+        <li><a href="{% url 'library:author-list' %}">All authors</a></li>
+        <li><a href="{% url 'library:publisher-list' %}">All publisher</a></li>
+        <li><a href="{% url 'library:store-list' %}">All store</a></li>
+    </ul>
+{% endblock %}

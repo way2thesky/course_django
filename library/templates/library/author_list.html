@@ -1,20 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
-
+    <li><a href="{% url 'library:index' %}">Home</a></li>
     <h1>Author List</h1>
+    <table cellspacing="0" cellpadding="10" rules="auto"
+           border="1" width="10%">
+        <tr bgcolor="#777"></tr>
+         <td><b>Name</b></td>
+        <td><b>Age</b></td>
 
-    {% if author_list %}
-        <ul>
-
+        {% if author_list %}
             {% for author in author_list %}
-                <li>
-                    <h3><a href="">{{ author }}</a> </h3>
-                        <strong>Age:</strong> {{ author.age }}
-                </li>
+                <tr>
+                    <td><a href="{% url 'library:author-detail' author.id %}">{{ author }}</a></td>
+                    <td>{{ author.age }}</td>
+                </tr>
             {% endfor %}
 
-        </ul>
-    {% else %}
-        <p>There are no authors available.</p>
-    {% endif %}
+        {% else %}
+            <p>There are no authors available.</p>
+        {% endif %}
+    </table>
 {% endblock %}

@@ -1,10 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'base.html' %}
 
-</body>
-</html>
+{% block content %}
+    <li><a href="{% url 'library:index' %}">Home</a></li>
+    <h1>Store Detail: <br> <strong>Books in store "{{ store }}"</strong></h1>
+    <table cellspacing="0" cellpadding="10" rules="auto"
+           border="1" width="30%">
+        <tr bgcolor="#777">
+            <td><b>Book</b></td>
+            <td><b>Pages</b></td>
+            <td><b>Price</b></td>
+            <td><b>Rating</b></td>
+            <td><b>Author</b></td>
+            <td><b>Publisher</b></td>
+            <td><b>Pubdate</b></td>
+
+
+        </tr>
+
+        {% for book in store.books.all %}
+            <tr>
+                <td><a href="{% url 'library:book-detail' book.id %}"> {{ book.name }}</a></td>
+                <td>{{ book.pages }}</td>
+                <td>{{ book.price }}</td>
+                <td>{{ book.rating }}</td>
+                <td><a href=""> {{ book.authors.all|join:", " }}</a></td>
+                <td><a href=""> {{ book.publisher }}</a></td>
+                <td>{{ book.pubdate }}</td>
+            </tr>
+
+        {% endfor %}
+
+
+    </table>
+{% endblock %}
