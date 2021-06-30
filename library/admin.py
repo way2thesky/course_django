@@ -1,10 +1,6 @@
-from library.models import Author, Book, Publisher, Store
-
 from django.contrib import admin
 
-admin.site.register(Author)
-admin.site.register(Store)
-admin.site.register(Book)
+from library.models import Author, Book, Publisher, Store
 
 
 class BooksInline(admin.TabularInline):
@@ -23,3 +19,8 @@ class PublisherAdmin(admin.ModelAdmin):
     """
 
     inlines = [BooksInline]
+
+
+admin.site.register(Author)
+admin.site.register(Store)
+admin.site.register(Book)

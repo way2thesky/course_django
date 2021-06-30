@@ -23,10 +23,7 @@ class Book(models.Model):
     rating = models.FloatField()
     authors = models.ManyToManyField(Author)
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE)
-    pubdate = models.DateField('date published')
-
-    class Meta:
-        default_related_name = 'books'
+    pubdate = models.DateField()
 
     def __str__(self):
         return self.name
@@ -35,9 +32,6 @@ class Book(models.Model):
 class Store(models.Model):
     name = models.CharField(max_length=300)
     books = models.ManyToManyField(Book)
-
-    class Meta:
-        default_related_name = 'stores'
 
     def __str__(self):
         return self.name

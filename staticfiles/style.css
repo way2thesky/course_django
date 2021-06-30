@@ -1,0 +1,11 @@
+li a {
+    color: red;
+}
+
+body {
+    background: white url("images/background.jpg");
+}
+
+td a {
+    color: greenyellow;
+}

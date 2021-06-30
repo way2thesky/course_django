@@ -1,32 +1,35 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-    <li><a href="{% url 'library:index' %}">Home</a></li>
-    <h1>Publisher Detail: <br> <strong>{{ publisher }}</strong></h1>
-    <table cellspacing="0" cellpadding="10" rules="auto"
-           border="1" width="10%">
-        <tr bgcolor="#777">
-            <td><b>Book</b></td>
-            <td><b>Pages</b></td>
-            <td><b>Price</b></td>
-            <td><b>Rating</b></td>
-            <td><b>Author</b></td>
-            <td><b>Pubdate</b></td>
+    <h1 class="display-4 mt-5">Publishers details: {{ publisher.name }}</h1>
 
-        </tr>
+    <div class="row">
+
+        {% for book in publisher.book_set.all %}
+
+            <div class="col-4">
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href={% url 'library:book-detail' pk=book.pk %}>{{ book.name }}</a>
+                        </h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ book.pages }} pages</li>
+                        <li class="list-group-item">rating: {{ book.rating }}</li>
+                        <li class="list-group-item">{{ book.pubdate }}</li>
+                        <p>Total authors: {{ book.authors.all|length }}</p>
+                        {% for author in book.authors.all %}
+                            <a href="{% url 'library:author-detail' pk=author.pk %}">{{ author }}</a>
+                        {% endfor %}
 
 
-        {% for book in publisher.books.all %}
-            <tr>
-                <td><a href="{% url 'library:book-detail' book.id %}"> {{ book.name }}</a></td>
-                <td>{{ book.pages }}</td>
-                <td>{{ book.price }}</td>
-                <td>{{ book.rating }}</td>
-                <td><a href="{{ book.get_absolute_url }}"> {{ book.authors.all|join:", " }}</a></td>
-                <td>{{ book.pubdate }}</td>
-            </tr>
+                    </ul>
+                </div>
+            </div>
+
+
         {% endfor %}
 
+    </div>
 
-    </table>
 {% endblock %}

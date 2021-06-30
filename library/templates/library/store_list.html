@@ -1,23 +1,20 @@
 {% extends "base.html" %}
+
 {% block content %}
-    <li><a href="{% url 'library:index' %}">Home</a></li>
     <h1>Store List</h1>
-    <table cellspacing="0" cellpadding="10" rules="rows"
-           border="1" width="10%">
-        <tr bgcolor="#777"></tr>
-
-        {% if store_list %}
-            {% for store in store_list %}
-                <tr>
-                    <td>
-                        <a href="{% url 'library:store-detail' store.id %}">{{ store.name }}</a>
-                    </td>
+    <table cellspacing="0" cellpadding="10" rules="auto"
+           border="1" width="30%">
+        <tr bgcolor="#777">
+            <td><b>Name</b></td>
+            <td><b>Books</b></td>
+        </tr>
+        <tr>
+            {% for store in stores %}
+                <td><a href={% url 'library:store-detail' pk=store.pk %}>{{ store.name }}</a>
+                <td>{{ store.books.all|length }}</td>
                 </tr>
+            {% empty %}
+                <p>There are no Stores available.</p>
             {% endfor %}
-
-        {% else %}
-            <p>There are no store available.</p>
-        {% endif %}
     </table>
 {% endblock %}
-

@@ -1,31 +1,41 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <li><a href="{% url 'library:index' %}">Home</a></li>
-    <h1>Book Detail: <br> <strong>{{ book.name }}</strong></h1>
-    <table cellspacing="0" cellpadding="10" rules="auto"
-           border="1" width="30%">
-        <tr bgcolor="#777">
-            <td><b>Pages</b></td>
-            <td><b>Price</b></td>
-            <td><b>Rating</b></td>
-            <td><b>Author</b></td>
-            <td><b>Publisher</b></td>
-            <td><b>Pubdate</b></td>
-            <td><b>Store</b></td>
-        </tr>
+    <h1 class="display-4 mt-5">Book Detail:</h1>
 
-        {% for store in book.stores.all %}
+    <dl class="row mt-5">
+      <dt class="col-sm-3">Name:</dt>
+      <dd class="col-sm-9">{{ book.name }}</dd>
 
-            <tr>
-                <td>{{ book.pages }}</td>
-                <td>{{ book.price }}</td>
-                <td>{{ book.rating }}</td>
-                <td><a href=""> {{ book.authors.all|join:", " }}</a></td>
-                <td><a href=""> {{ book.publisher }}</a></td>
-                <td>{{ book.pubdate }}</td>
-                <td>{{ store.name }}</td>
-            </tr>
+      <dt class="col-sm-3">Author</dt>
+      <dd class="col-sm-9">
+        {% for author in book.authors.all %}
+          <a href="{% url 'library:author-detail' pk=author.pk %}">{{ author }}</a><br>
         {% endfor %}
-    </table>
+      </dd>
+
+    <dt class="col-sm-3">2 book price:</dt>
+    <dd class="col-sm-9">
+        {{ book_total.book_total }} $<br>
+      </dd>
+
+      <dt class="col-sm-3">Pages:</dt>
+      <dd class="col-sm-9">{{ book.pages }}</dd>
+
+      <dt class="col-sm-3">Price:</dt>
+      <dd class="col-sm-9">{{ book.price }} $</dd>
+
+      <dt class="col-sm-3">Rating:</dt>
+      <dd class="col-sm-9">{{ book.rating }}</dd>
+
+      <dt class="col-sm-3">Publisher:</dt>
+      <dd class="col-sm-9"><a href={% url 'library:publisher-detail' pk=book.publisher.pk %}>{{ book.publisher }}</a></dd>
+
+      <dt class="col-sm-3">Publication data:</dt>
+      <dd class="col-sm-9">{{ book.pubdate }}</dd>
+    </dl>
+
+
+
+
 {% endblock %}

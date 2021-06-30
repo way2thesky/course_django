@@ -1,35 +1,58 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-    <li><a href="{% url 'library:index' %}">Home</a></li>
-    <h1>Store Detail: <br> <strong>Books in store "{{ store }}"</strong></h1>
-    <table cellspacing="0" cellpadding="10" rules="auto"
-           border="1" width="30%">
-        <tr bgcolor="#777">
-            <td><b>Book</b></td>
-            <td><b>Pages</b></td>
-            <td><b>Price</b></td>
-            <td><b>Rating</b></td>
-            <td><b>Author</b></td>
-            <td><b>Publisher</b></td>
-            <td><b>Pubdate</b></td>
+    <h1 class="display-4 mt-5">Store Detail:</h1>
+
+    <dl class="row mt-5">
+        <dt class="col-sm-3">Name:</dt>
+        <dd class="col-sm-9">{{ store.name }}</dd>
+
+        <dt class="col-sm-3">Total book in Stores</dt>
+        <dd class="col-sm-9">
+            <p>{{ store.books.all|length }}</p></dd>
+
+        <dt class="col-sm-3 text-truncate">Total price Books in Store:</dt>
+        <dd class="col-sm-9">{{ book_list.total_price}} $</dd>
+
+        <dt class="col-sm-3">Min price:</dt>
+        <dd class="col-sm-9">{{ book_list.min_price|floatformat:2 }} $</dd>
+
+        <dt class="col-sm-3 text-truncate">Max price:</dt>
+        <dd class="col-sm-9">{{ book_list.max_price|floatformat:2 }} $</dd>
+
+        <dt class="col-sm-3 text-truncate">Avg price:</dt>
+        <dd class="col-sm-9">{{ book_list.avg_price|floatformat:2 }} $</dd>
+
+        <dt class="col-sm-3 text-truncate">Total pages:</dt>
+        <dd class="col-sm-9">{{ book_list.total_pages }} pg</dd>
+
+        <dt class="col-sm-3 text-truncate">Avg rating:</dt>
+        <dd class="col-sm-9">{{ book_list.average_rating }} </dd>
 
 
-        </tr>
-
+    </dl>
+    <div class="row">
         {% for book in store.books.all %}
-            <tr>
-                <td><a href="{% url 'library:book-detail' book.id %}"> {{ book.name }}</a></td>
-                <td>{{ book.pages }}</td>
-                <td>{{ book.price }}</td>
-                <td>{{ book.rating }}</td>
-                <td><a href=""> {{ book.authors.all|join:", " }}</a></td>
-                <td><a href=""> {{ book.publisher }}</a></td>
-                <td>{{ book.pubdate }}</td>
-            </tr>
+
+            <div class="col-4">
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <h5 class="card-title"><a href={% url 'library:book-detail' pk=book.pk %}>{{ book.name }}</a>
+                        </h5>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">{{ book.pages }} pages</li>
+                        <li class="list-group-item">rating: {{ book.rating }}</li>
+                        <li class="list-group-item">{{ book.pubdate }}</li>
+                        <p>Total authors: {{ book.authors.all|length }}</p>
+                        {% for author in book.authors.all %}
+                            <a href="{% url 'library:author-detail' pk=author.pk %}">{{ author }}</a>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+
 
         {% endfor %}
-
-
-    </table>
+    </div>
 {% endblock %}

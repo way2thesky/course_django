@@ -1,27 +1,28 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
-    <li><a href="{% url 'library:index' %}">Home</a></li>
-    <h1>Author Detail: <br> <strong>{{ author }}</strong></h1>
-    <table cellspacing="0" cellpadding="10" rules="rows"
-           border="1" width="10%">
-        <tr bgcolor="#777">
-            <td><b>Book</b></td>
-            <td><b>Pages</b></td>
-            <td><b>Price</b></td>
-            <td><b>Rating</b></td>
-            <td><b>Publisher</b></td>
-            <td><b>Pubdate</b></td>
-        </tr>
-        {% for book in author.books.all %}
-            <tr>
-                <td><a href="{% url 'library:book-detail' book.id %}"> {{ book.name }}</a></td>
-                <td>{{ book.pages }}</td>
-                <td>{{ book.price }}</td>
-                <td>{{ book.rating }}</td>
-                <td>{{ book.publisher }}</td>
-                <td>{{ book.pubdate }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+<h1 class="display-4 mt-5">Authors detail: {{ author.name }}</h1>
+<div class="row">
+
+    {% for book in author.book_set.all %}
+
+    <div class="col-4">
+        <div class="card mb-2" >
+            <div class="card-body">
+                <h5 class="card-title"><a href={% url 'library:book-detail' pk=book.pk %}>{{ book.name }}</a></h5>
+            </div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">{{ book.pages }} pages</li>
+                <li class="list-group-item">rating: {{ book.rating }}</li>
+                <li class="list-group-item">{{ book.pubdate }}</li>
+            </ul>
+        </div>
+    </div>
+
+
+    {% endfor %}
+
+</div>
+
+
 {% endblock %}
