@@ -152,5 +152,3 @@ SHELL_PLUS_PRINT_SQL = True
 LOGIN_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-
