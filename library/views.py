@@ -1,8 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.db.models import Avg, Count, Max, Min, Sum
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 
 from .models import Author, Book, Publisher, Store
+
+User = get_user_model()
 
 
 class HomePageView(TemplateView):
@@ -38,6 +41,7 @@ class BookDetail(DetailView):
     model = Book
     template_name = 'library/book_detail.html'
     context_object_name = 'book'
+    Book.objects.select_related('publisher').prefetch_related('authors')
 
 
 def get_context_data(self, **kwargs):

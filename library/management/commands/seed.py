@@ -1,6 +1,5 @@
 import random
 
-from django.contrib.auth import get_user_model
 from django.core.management.base import BaseCommand
 from django.utils import timezone
 
@@ -8,9 +7,7 @@ from faker import Faker
 
 from library.models import Author, Book, Publisher, Store
 
-
 fake = Faker()
-UserModel = get_user_model()
 
 
 class Command(BaseCommand):

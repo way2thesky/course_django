@@ -139,6 +139,12 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+GRAPH_MODELS = {
+    'all_applications': False,
+    'group_models': True,
+    'app_labels': ["library"],
+}
+
 SHELL_PLUS = "ipython"
 SHELL_PLUS_PRINT_SQL = True
 
@@ -146,3 +152,5 @@ SHELL_PLUS_PRINT_SQL = True
 LOGIN_REDIRECT_URL = '/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
