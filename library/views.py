@@ -17,32 +17,10 @@ class HomePageView(TemplateView):
     template_name = 'index.html'
 
 
-class AuthorCreate(LoginRequiredMixin, CreateView):
-    model = Author
-    fields = ['name', 'pages', 'price', 'rating', 'authors', 'publisher', 'pubdate']
-    template_name = 'library/author_create.html'
-    success_url = reverse_lazy('library:author-list')
-
-
-class AuthorUpdate(LoginRequiredMixin, UpdateView):
-    model = Author
-    fields = ['name', 'pages', 'price', 'rating', 'authors', 'publisher', 'pubdate']
-    template_name = 'library/author_update.html'
-
-    def get_success_url(self):
-        author_id = self.kwargs['pk']
-        return reverse_lazy('library:author-detail', kwargs={'pk': author_id})
-
-
-class AuthorDelete(LoginRequiredMixin, DeleteView):
-    model = Author
-    template_name = 'library/author_delete.html'
-    success_url = reverse_lazy('library:author-list')
-
-
 @method_decorator(cache_page(20), name='dispatch')
 class AuthorList(ListView):
     model = Author
+    paginate_by = 5
     template_name = 'library/author_list.html'
     context_object_name = 'authors'
     queryset = Author.objects.prefetch_related('book_set__authors')
@@ -129,7 +107,6 @@ class PublisherDetail(DetailView):
 @method_decorator(cache_page(20), name='dispatch')
 class StoreList(ListView):
     model = Store
-    paginate_by = 5
     template_name = 'library/store_list.html'
     context_object_name = 'stores'
 
