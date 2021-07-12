@@ -63,12 +63,8 @@ class BookList(ListView):
     paginate_by = 5
     template_name = 'library/book_list.html'
     context_object_name = 'books'
-    queryset = Book.objects.annotate(num_authors=Count('authors'))
-
-    def get_queryset(self, **kwargs):
-        return super(BookList, self).get_queryset() \
-            .select_related('publisher') \
-            .prefetch_related('authors__book_set').all()
+    queryset = Book.objects.annotate(num_authors=Count('authors')).select_related('publisher') \
+        .prefetch_related('authors__book_set')
 
 
 @method_decorator(cache_page(20), name='dispatch')
