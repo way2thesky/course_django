@@ -20,7 +20,7 @@ class HomePageView(TemplateView):
 @method_decorator(cache_page(20), name='dispatch')
 class AuthorList(ListView):
     model = Author
-    paginate_by = 5
+    paginate_by = 100
     template_name = 'library/author_list.html'
     context_object_name = 'authors'
     queryset = Author.objects.prefetch_related('book_set__authors')
@@ -60,7 +60,7 @@ class BookDelete(LoginRequiredMixin, DeleteView):
 @method_decorator(cache_page(20), name='dispatch')
 class BookList(ListView):
     model = Book
-    paginate_by = 5
+    paginate_by = 100
     template_name = 'library/book_list.html'
     context_object_name = 'books'
     queryset = Book.objects.annotate(num_authors=Count('authors')).select_related('publisher') \
@@ -85,7 +85,7 @@ class BookDetail(DetailView):
 @method_decorator(cache_page(20), name='dispatch')
 class PublisherList(ListView):
     model = Publisher
-    paginate_by = 5
+    paginate_by = 100
     template_name = 'library/publisher_list.html'
     context_object_name = 'publishers'
     queryset = Publisher.objects.prefetch_related('book_set__authors')
@@ -103,6 +103,8 @@ class PublisherDetail(DetailView):
 @method_decorator(cache_page(20), name='dispatch')
 class StoreList(ListView):
     model = Store
+    paginate_by = 100
+    queryset = Store.objects.prefetch_related('books')
     template_name = 'library/store_list.html'
     context_object_name = 'stores'
 

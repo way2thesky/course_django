@@ -41,6 +41,7 @@ INSTALLED_APPS = [
 
     'library.apps.LibraryConfig',
     'django_extensions',
+    'university.apps.UniversityConfig',
 ]
 
 if DEBUG:
@@ -98,7 +99,7 @@ CACHES = {
         'OPTIONS': {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient'
         },
-        'KEY_PREFIX': 'django_example_project'
+        'KEY_PREFIX': 'core'
     }
 }
 # Password validation

@@ -14,7 +14,6 @@
             {% for book in books %}
 
                 <tr>
-                    <!-- здесь код, который использует информацию из каждого элемента book списка-->
                     <td><a href="{% url 'library:book-detail' book.id %}">{{ book.name }}</a></td>
 
                     <td><a href={% url 'library:publisher-detail' pk=book.publisher.pk %}>{{ book.publisher }}</a></td>

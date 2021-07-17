@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block content %}
+
+    <h1 class="display-4 mt-5">Student Detail:</h1>
+
+    <dl class="row mt-5">
+        <dt class="col-sm-3">First Name:</dt>
+        <dd class="col-sm-9">{{ student.first_name }}</dd>
+        <dt class="col-sm-3">Last Name:</dt>
+        <dd class="col-sm-9">{{ student.last_name }}</dd>
+        <dt class="col-sm-3">Date of birth:</dt>
+        <dd class="col-sm-9">{{ student.date_of_birth }}</dd>
+        <dt class="col-sm-3">University:</dt>
+        <dd class="col-sm-9"><a
+                href={% url 'university:university-detail' pk=student.university.pk %}>{{ student.university }}</a>
+    </dl>
+
+{% endblock %}

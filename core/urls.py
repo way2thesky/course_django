@@ -22,6 +22,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', RedirectView.as_view(url='/library/', permanent=True)),
     path('library/', include('library.urls')),
+    path('university/', include('university.urls')),
+
 ]
 
 if settings.DEBUG:

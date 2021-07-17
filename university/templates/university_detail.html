@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load cache %}
+{% block content %}
+{% cache 500 sidebar %}
+    <h1 class="display-4 mt-5">University detail: {{ university.name }}<br> {{ university.built }}</h1>
+
+
+    <div class="row">
+
+        {% for student in university.student_set.all %}
+
+            <div class="col-4">
+                <div class="card mb-2">
+                    <div class="card-body">
+                        <dd class="col-sm-9"><a href={% url 'university:student-detail' student.id %}>Student</a>
+                        <li class="list-group-item">First name: {{ student.first_name }} </li>
+                        <li class="list-group-item">Last name: {{ student.last_name }} </li>
+                        <li class="list-group-item">Date of birth: {{ student.date_of_birth }} </li>
+                        <li class="list-group-item">AVG Students: {{ avg_student_in_uni.student_avg|floatformat }} </li>
+
+
+                    </div>
+                </div>
+            </div>
+
+
+        {% endfor %}
+
+    </div>
+{% endcache %}
+{% endblock %}
