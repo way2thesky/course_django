@@ -16,7 +16,7 @@ urlpatterns = [
 
     path('stores/', views.StoreList.as_view(), name='store-list'),
     path('store/<int:pk>/', views.StoreDetail.as_view(), name='store-detail'),
-
+    path('store/create/', views.store_create, name='store-create'),
     # Homework 14. Class based views, pagination
     path('book/create/', views.BookCreate.as_view(), name='book-create'),
     path('book/update/<int:pk>/', views.BookUpdate.as_view(), name='book-update'),

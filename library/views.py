@@ -1,13 +1,16 @@
+from django.contrib import messages
 from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Avg, Count, Max, Min, Sum
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 from django.views.generic.base import TemplateView
 
+from .forms import StoreModelForm
 from .models import Author, Book, Publisher, Store
 
 User = get_user_model()
@@ -20,7 +23,7 @@ class HomePageView(TemplateView):
 @method_decorator(cache_page(20), name='dispatch')
 class AuthorList(ListView):
     model = Author
-    paginate_by = 100
+    paginate_by = 10
     template_name = 'library/author_list.html'
     context_object_name = 'authors'
     queryset = Author.objects.prefetch_related('book_set__authors')
@@ -57,10 +60,9 @@ class BookDelete(LoginRequiredMixin, DeleteView):
     success_url = reverse_lazy('library:book-list')
 
 
-@method_decorator(cache_page(20), name='dispatch')
 class BookList(ListView):
     model = Book
-    paginate_by = 100
+    paginate_by = 10
     template_name = 'library/book_list.html'
     context_object_name = 'books'
     queryset = Book.objects.annotate(num_authors=Count('authors')).select_related('publisher') \
@@ -85,10 +87,9 @@ class BookDetail(DetailView):
 @method_decorator(cache_page(20), name='dispatch')
 class PublisherList(ListView):
     model = Publisher
-    paginate_by = 100
+    paginate_by = 10
     template_name = 'library/publisher_list.html'
     context_object_name = 'publishers'
-    queryset = Publisher.objects.prefetch_related('book_set__authors')
 
 
 @method_decorator(cache_page(20), name='dispatch')
@@ -103,7 +104,7 @@ class PublisherDetail(DetailView):
 @method_decorator(cache_page(20), name='dispatch')
 class StoreList(ListView):
     model = Store
-    paginate_by = 100
+    paginate_by = 10
     queryset = Store.objects.prefetch_related('books')
     template_name = 'library/store_list.html'
     context_object_name = 'stores'
@@ -127,3 +128,18 @@ class StoreDetail(DetailView):
             average_rating=Avg('books__rating'),
         )
         return context
+
+
+def store_create(request):
+    if request.method == 'POST':
+        form = StoreModelForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Created")
+            form = StoreModelForm()
+
+    else:
+        form = StoreModelForm()
+
+    context = {'form': form}
+    return render(request, 'store_create.html', {'context': context})

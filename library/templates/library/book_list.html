@@ -1,52 +1,37 @@
 {% extends 'base.html' %}
 {% block content %}
-
+    {% load custom_tags %}
     <h1 class="display-4 mt-5">Book list:</h1>
-    <ul class="list-group">
-        <table cellspacing="0" cellpadding="6px" rules="auto"
-               border="1" width="100%">
-            <tr bgcolor="#777">
-                <td><b>Name</b></td>
-                <td><b>Publisher</b></td>
-                <td><b>Authors</b></td>
-                <td><b>Annotate</b></td>
+    <table cellspacing="0" cellpadding="6px" rules="auto"
+           border="1" width="100%">
+        <tr bgcolor="#777">
+            <td><b>Name</b></td>
+            <td><b>Publisher</b></td>
+            <td><b>Authors</b></td>
+            <td><b>Annotate</b></td>
+        </tr>
+        {% get_random_book %}
+        {% for book in books %}
+            <tr>
+                <td><a href="{% url 'library:book-detail' book.id %}">{{ book.name|check_forbidden_words }}</a></td>
+
+                <td><a href={% url 'library:publisher-detail' pk=book.publisher.pk %}>{{ book.publisher }}</a></td>
+                <td>
+                    {% for author in book.authors.all %}
+                        {% if forloop.last %}
+                        <a href="{% url 'library:author-detail' pk=author.pk %}">{{ author }} </a>
+                        {% else %}
+                        <a href="{% url 'library:author-detail' pk=author.pk %}">{{ author }}, </a>
+                        {% endif %}
+                    {% endfor %}
+                </td>
+                <td><span
+                        class="badge badge-primary badge-pill"> annotate: count author {{ book.num_authors }}</span>
+                </td>
             </tr>
-            {% for book in books %}
 
-                <tr>
-                    <td><a href="{% url 'library:book-detail' book.id %}">{{ book.name }}</a></td>
-
-                    <td><a href={% url 'library:publisher-detail' pk=book.publisher.pk %}>{{ book.publisher }}</a></td>
-                    <td>
-                        {% for author in book.authors.all %}
-                            <a href="{% url 'library:author-detail' pk=author.pk %}">{{ author }} </a>
-                        {% endfor %}
-                    </td>
-                    <td><span
-                            class="badge badge-primary badge-pill"> annotate: count author {{ book.num_authors }}</span>
-                    </td>
-                </tr>
-
-            {% empty %}
-                <p>There are no books in the library.</p>
-            {% endfor %}
-        </table>
-    </ul>
-    <div class="paginator">
-<span class="step-links">
-    {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; First</a>
-        <a href="?page={{ page_obj.has_previous_page_number }}">previous</a>
-    {% endif %}
-
-    <span class="current">
-    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-</span>
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
-    {% endif %}
-        </span>
-    </div>
-
+        {% empty %}
+            <p>There are no books in the library.</p>
+        {% endfor %}
+    </table>
 {% endblock %}
