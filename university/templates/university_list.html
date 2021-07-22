@@ -1,37 +1,27 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <title>University</title>
-    <h1 class="display-4 mt-5">University List:</h1>
+    <h1 class="display-4 mt-5">University list:</h1>
+    <table cellspacing="0" cellpadding="6px" rules="auto"
+           border="1" width="50%">
+        <tr bgcolor="#777">
+            <td><b>University</b></td>
+            <td><b>Students</b></td>
 
-    {% for university in universities %}
-        <ul class="list-group">
-            <li class="list-group-item d-flex justify-content-between align-items-center">
+        </tr>
 
-                <a href={% url 'university:university-detail' pk=university.pk %} class="card-link ml-0">{{ university.name }}</a>
+        {% for university in universities %}
+            <tr>
+                <td><a href='{% url 'university:university-detail' pk=university.pk %}' class="card-link
+                   ml-0">{{ university.name }}</a></td>
 
-                     <a href="../../university/student/{{ student }}"> <span class="badge badge-primary badge-pill">Students: {{ university.student_set.all|length }}</span></a>
-            </li>
+                <td><a href="../../university/student/{{ student }}"> <span class="badge badge-primary badge-pill">Students: {{ university.student_set.all|length }}</span></a>
+                </td>
+            </tr>
 
         {% empty %}
-    <li>No universities yet.</li>
-        </ul>
-    {% endfor %}
-    <div class="paginator">
-<span class="step-links">
-    {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; First</a>
-        <a href="?page={{ page_obj.has_previous_page_number }}">previous</a>
-    {% endif %}
+            <li>No universities yet.</li>
 
-    <span class="current">
-    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-</span>
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
-    {% endif %}
-        </span>
-    </div>
-
+        {% endfor %}
+    </table>
 {% endblock %}

@@ -2,39 +2,23 @@
 
 
 {% block content %}
-    <title>Student</title>
-
-    {% for student in students %}
-
-        <ul class="list-group">
-
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-
-                <ol><p>Student: </p><a href='{% url 'university:student-detail' pk=student.pk %}' class="card-link
-                   ml-0">{{ student.last_name }}</a></ol>
-                <ol><p>University: </p><a
-                        href={% url 'university:university-detail' pk=student.university.pk %}> {{ student.university }}</a>
-                </ol>
-            </li>
-        </ul>
-    {% empty %}
-        <li>No students yet.</li>
-    {% endfor %}
-    <div class="paginator">
-<span class="step-links">
-    {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; First</a>
-        <a href="?page={{ page_obj.has_previous_page_number }}">previous</a>
-    {% endif %}
-
-    <span class="current">
-    Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-</span>
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
-    {% endif %}
-        </span>
-    </div>
-
+    <h1 class="display-4 mt-5">Student list:</h1>
+    <table cellspacing="0" cellpadding="6px" rules="auto"
+           border="1" width="50%">
+        <tr bgcolor="#777">
+            <td><b>Student</b></td>
+            <td><b>University</b></td>
+        </tr>
+        {% for student in students %}
+            <tr>
+                <td><a href='{% url 'university:student-detail' pk=student.pk %}' class="card-link
+                   ml-0">{{ student.last_name }}</a></td>
+                <td>
+                    <a href={% url 'university:university-detail' pk=student.university.pk %}> {{ student.university }}</a>
+                </td>
+            </tr>
+        {% empty %}
+            <li>No students yet.</li>
+        {% endfor %}
+    </table>
 {% endblock %}
