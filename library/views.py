@@ -134,12 +134,11 @@ def store_create(request):
     if request.method == 'POST':
         form = StoreModelForm(request.POST)
         if form.is_valid():
+            name = form.cleaned_data['name']
             form.save()
-            messages.success(request, "Created")
-            form = StoreModelForm()
+            text = f'You added {name}.'
 
     else:
         form = StoreModelForm()
-
-    context = {'form': form}
+    context = {'form': form,}
     return render(request, 'store_create.html', {'context': context})
