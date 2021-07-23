@@ -40,6 +40,9 @@
             <li class="nav-item">
                 <a class="nav-link" href={% url 'university:student-list' %}>Student</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href={% url 'library:random-book' %}>Random Book</a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -58,6 +61,7 @@
         </div>
     </div>
 </div>
+
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
@@ -68,28 +72,32 @@
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 
-
 {% block pagination %}
-    <div class="paginator">
-<span class="step-links">
-    {% if page_obj.has_previous %}
-        <a href="?page=1">&laquo; First</a>
-        <a href="?page={{ page_obj.has_previous_page_number }}">previous</a>
-    {% endif %}
+    <div style="text-align: center;">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+        {% endif %}
 
-    <span class="current">
-        {% if page_obj.paginator.num_pages == 0 or 1 %}
+        <span class="current">
+            {% if page_obj.paginator.num_pages == 0 or 1  %}
             {% else  %}
             Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-
-            </span>
-        {% endif %}
-    {% if page_obj.has_next %}
-        <a href="?page={{ page_obj.next_page_number }}">next</a>
-        <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
-    {% endif %}
+            {% endif %}
         </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
     </div>
 {% endblock %}
+
+
+
+
+
 </body>
 </html>

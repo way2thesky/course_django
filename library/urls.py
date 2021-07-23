@@ -5,6 +5,7 @@ from . import views
 app_name = 'library'
 urlpatterns = [
     path('', views.HomePageView.as_view(), name='index'),
+    path('random/', views.GetRandomBook.as_view(), name='random-book'),
     path('authors/', views.AuthorList.as_view(), name='author-list'),
     path('author/<int:pk>/', views.AuthorDetail.as_view(), name='author-detail'),
 

@@ -20,6 +20,9 @@ class HomePageView(TemplateView):
     template_name = 'index.html'
 
 
+class GetRandomBook(TemplateView):
+    template_name = 'library/get_random_book.html'
+
 @method_decorator(cache_page(20), name='dispatch')
 class AuthorList(ListView):
     model = Author

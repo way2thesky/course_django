@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% block content %}
-    {% load custom_tags %}
     <h1 class="display-4 mt-5">Book list:</h1>
     <table cellspacing="0" cellpadding="6px" rules="auto"
            border="1" width="100%">
@@ -10,10 +9,10 @@
             <td><b>Authors</b></td>
             <td><b>Annotate</b></td>
         </tr>
-        {% get_random_book %}
+
         {% for book in books %}
             <tr>
-                <td><a href="{% url 'library:book-detail' book.id %}">{{ book.name|check_forbidden_words }}</a></td>
+                <td><a href="{% url 'library:book-detail' book.id %}">{{ book.name }}</a></td>
 
                 <td><a href={% url 'library:publisher-detail' pk=book.publisher.pk %}>{{ book.publisher }}</a></td>
                 <td>
@@ -34,4 +33,5 @@
             <p>There are no books in the library.</p>
         {% endfor %}
     </table>
+
 {% endblock %}
