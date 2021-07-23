@@ -12,22 +12,22 @@
             <p>{{ store.books.all|length }}</p></dd>
 
         <dt class="col-sm-3 text-truncate">Total price Books in Store:</dt>
-        <dd class="col-sm-9">{{ book_list.total_price }} $</dd>
+        <dd class="col-sm-9">{{ book_list.total_price|floatformat:2|currency }} </dd>
 
         <dt class="col-sm-3">Min price:</dt>
-        <dd class="col-sm-9">{{ book_list.min_price|floatformat:2 }} $</dd>
+        <dd class="col-sm-9">{{ book_list.min_price|floatformat:2|currency  }} </dd>
 
         <dt class="col-sm-3 text-truncate">Max price:</dt>
-        <dd class="col-sm-9">{{ book_list.max_price|floatformat:2 }} $</dd>
+        <dd class="col-sm-9">{{ book_list.max_price|floatformat:2|currency  }} </dd>
 
         <dt class="col-sm-3 text-truncate">Avg price:</dt>
-        <dd class="col-sm-9">{{ book_list.avg_price|floatformat:2 }} $</dd>
+        <dd class="col-sm-9">{{ book_list.avg_price|floatformat:2|currency   }} </dd>
 
         <dt class="col-sm-3 text-truncate">Total pages:</dt>
-        <dd class="col-sm-9">{{ book_list.total_pages|floatformat:2 }} pg</dd>
+        <dd class="col-sm-9">{{ book_list.total_pages|floatformat:2 }} </dd>
 
         <dt class="col-sm-3 text-truncate">Avg rating:</dt>
-        <dd class="col-sm-9">{{ book_list.average_rating }} </dd>
+        <dd class="col-sm-9">{{ book_list.average_rating|floatformat:2 }} </dd>
 
 
     </dl>

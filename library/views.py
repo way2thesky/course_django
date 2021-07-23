@@ -23,6 +23,7 @@ class HomePageView(TemplateView):
 class GetRandomBook(TemplateView):
     template_name = 'library/get_random_book.html'
 
+
 @method_decorator(cache_page(20), name='dispatch')
 class AuthorList(ListView):
     model = Author
@@ -137,11 +138,11 @@ def store_create(request):
     if request.method == 'POST':
         form = StoreModelForm(request.POST)
         if form.is_valid():
-            name = form.cleaned_data['name']
             form.save()
-            text = f'You added {name}.'
-
+            messages.success(request, "Created")
+        else:
+            messages.error(request, 'Not Created')
     else:
         form = StoreModelForm()
-    context = {'form': form,}
+    context = {'form': form}
     return render(request, 'store_create.html', {'context': context})

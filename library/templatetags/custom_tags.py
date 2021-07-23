@@ -1,8 +1,6 @@
-import random
 import re
 
 from django import template
-from django.core.cache import cache
 from django.utils.safestring import mark_safe
 
 from library.models import Book
@@ -33,7 +31,7 @@ def modify_string(value):
     word_list = [
         "Neque", "porro", "quisquam", "est", "qui", "dolorem",
         "ipsum", "quia", "dolor", "sit", "sit", "consectetur",
-        "adipisci", "velit", "amet","Нет", "никого", "кто", "любил", "бы", "боль",
+        "adipisci", "velit", "amet", "Нет", "никого", "кто", "любил", "бы", "боль",
         "саму", "по", "себе", "кто", "искал", "бы",
         "её", "и", "кто", "хотел", "бы", "иметь", "её", "просто", "потому", "что", "это", "боль"
     ]
@@ -42,3 +40,8 @@ def modify_string(value):
         value = re.sub(r'\b' + re.escape(word) + r'\b', rep, value)
 
     return value
+
+
+@register.filter
+def currency(value, name='UAH'):
+    return f'{value}, {name}'
