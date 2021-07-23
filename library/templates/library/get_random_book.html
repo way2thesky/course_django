@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+    {% load custom_tags %}
+    <div style="text-align: center;">
+        <div class="jumbotron mt-5">
+            <h2>The best Book with high rating for you!</h2>
+            {% get_random_book %}
+            <hr class="my-4">
+                <h3><a href="{% url 'library:random-book' %}"> Generate Book</a></h3>
+
+        </div>
+    </div>
+
+{% endblock %}
